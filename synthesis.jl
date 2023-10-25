@@ -56,6 +56,7 @@ function synthesis(m, l, n, d)
         @constraint(model, Ch * J1' .== 1.0 * Array(I(d)))
         @constraint(model, Ch .== J2 * P11)
         @constraint(model, P21 .== J3 * P11)
+        @constraint(model, Ch[1:d,1:d] .== 1.0 * Array(I(d)))
         @constraint(model, -lmi >= 0, PSDCone())
         @objective(model, Min, 0)
         optimize!(model)
@@ -73,5 +74,5 @@ function synthesis(m, l, n, d)
         println("Rho: ", sqrt(r2), " ", termination_status(model))
     end
 
-return A, B, C, rho, Pl
+    return A, B, C, rho, Pl
 end
